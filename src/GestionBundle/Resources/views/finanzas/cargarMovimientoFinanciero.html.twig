@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<span class="h5">Registrar Cuota Plan de Pago</span>
+
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+        <div class="form-group row">
+            <div class="col-md-3">
+                {{  form_label(form.movimiento.movimiento.ctacte)   }}
+                {{  form_widget(form.movimiento.movimiento.ctacte, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.movimiento.movimiento.ctacte) }}
+                </span>
+            </div>            
+        </div>    
+		<div class="form-group row">
+		    <div class=" col-md-3">
+    			{{	form_label(form.movimiento.movimiento.fecha)	}}
+    			{{	form_widget(form.movimiento.movimiento.fecha, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.movimiento.movimiento.fecha) }}
+    			</span>
+			</div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                {{  form_label(form.movimiento.concepto)    }}
+                {{  form_widget(form.movimiento.concepto, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.movimiento.concepto) }}
+                </span>
+            </div>    
+        </div>              
+        <div class="form-group row">
+            <div class="col-md-6">
+                {{  form_label(form.movimiento.movimiento.detalle)    }}
+                {{  form_widget(form.movimiento.movimiento.detalle, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.movimiento.movimiento.detalle) }}
+                </span>
+            </div>    
+		</div>   
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.movimiento.unidad)    }}
+                {{  form_widget(form.movimiento.unidad, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.movimiento.unidad) }}
+                </span>
+            </div>    
+        </div>                   
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.numeroCuota)    }}
+                {{  form_widget(form.numeroCuota, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.numeroCuota) }}
+                </span>
+            </div>                
+            <div class="col-md-2">
+                {{  form_label(form.movimiento.movimiento.cantidad)    }}
+                {{  form_widget(form.movimiento.movimiento.cantidad, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.movimiento.movimiento.cantidad) }}
+                </span>
+            </div>    
+            <div class="col-md-2">
+                {{  form_label(form.movimiento.movimiento.importe)    }}
+                {{  form_widget(form.movimiento.movimiento.importe, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.movimiento.movimiento.importe) }}
+                </span>
+            </div>  
+		</div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.multiplicaPor, 'Cant. Cuotas Plan')    }}
+                {{  form_widget(form.multiplicaPor, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.multiplicaPor) }}
+                </span>
+            </div>   
+        </div>        
+		<div class="form-group row">
+			<div class="col-md-2">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>
+		</div>	
+	 {{ form_end(form) }}
+
+
+	</div>
+{% endblock %}

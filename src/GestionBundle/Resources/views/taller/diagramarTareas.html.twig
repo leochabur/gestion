@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+        <span class="h5">ORDEN DE TRABAJO</span>
+
+        <div class="card">
+          <div class="card-header">
+                <div class="form-group row">
+                    <div class=" col-md-3">
+                        Numero: {{  diagrama.id   }}
+                    </div>                    
+                    <div class=" col-md-3">
+                        Fecha: {{  diagrama.fecha| date("d/m/Y")   }}
+                    </div>
+                    <div class=" col-md-3">
+                        Responsable: {{  diagrama.responsable  }}
+                    </div>            
+                </div>                
+          </div>
+          <div class="card-body">
+                    <span class="h7">Tareas diagramadas</span>
+                    <table class="table table-striped table-hover table-bordered results table-sm estilo1">
+                                    <thead>
+                                        <tr>
+                                            <th>Descripcion</th>
+                                            <th>Interno</th>  
+                                            <th></th>       
+                                        </tr>
+                                    </thead>
+                                    <tbody>                     
+                                        {% for mov in diagrama.tareasProgramadas %}
+                                            <tr>
+                                                <td>{{ mov.descripcion | upper }} </td>
+                                                <td>{{ mov.unidad}} </td>
+                                                <td class="text-center"><a href="{{ path('taller_diagramar_quitar_tarea', {'id' : mov.id }) }}" class="btn btn-info btn-sm deleteit">-</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                     </tbody>
+                    </table>  
+                    {% if not diagrama.cerrada %}
+                    <div class="row">
+                        <div class="col-2">
+                            <a href="{{ path('taller_finalizar_diagrama_tareas', {'id' : diagrama.id})}}" class="btn btn-warning fina">Finalizar Diagrama</a>                            
+                        </div>
+                        <div class="col-2">
+                            <a href="" class="btn btn-danger">Eliminar Diagrama</a>                                   
+                        </div>                 
+                    </div>   
+                    {% endif %}
+        
+          </div>
+      </div>
+
+
+		
+
+
+    {% if anomalias is defined and not diagrama.cerrada%} 
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Anomalias Pendientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Tareas Mantenimiento</a>
+          </li>
+        </ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <table class="table table-striped table-hover table-bordered results table-sm estilo1">
+                        <thead>
+                            <tr>
+                                <th>Orden</th>
+                                <th>Fecha</th>
+                                <th>Tipo Desp.</th>
+                                <th>Detalle</th>                            
+                                <th>F0015</th>
+                                <th>Interno</th>          
+                                <th>Informado Por...</th>   
+                                <th>Detalle Tarea</th>              
+                            </tr>
+                        </thead>
+                        <tbody>                     
+                            {% for mov in anomalias %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ mov.fecha | date("d/m/Y") }}</td>
+                                    <td>{{ mov.tipoDesperfecto }} </td>
+                                    <td>{{ mov.observacion | title }} </td>                                
+                                    <td>{{ mov.numPlanilla}} </td>
+                                    <td>{{ mov.unidad}} </td>           
+                                    <td>{{ mov.personaje }} </td>
+                                    <td>
+                                                {{ form_start(forms[mov.id], {'attr':{'class':'add row justify-content-md-center', 'novalidate': 'novalidate'}}) }}
+                                                {{  form_widget(forms[mov.id].tarea, {'attr':{'class' : 'form-control form-control-sm col-9'}}) }}
+                                                <span class="text-danger">
+                                                    {{ form_errors(forms[mov.id].tarea) }}
+                                                </span>
+                                                {{  form_widget(forms[mov.id].diagramar, {'attr':{'class' : 'btn btn-success btn-sm col-2 size'}}) }}
+                                                {{ form_end(forms[mov.id]) }}   
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                         </tbody>
+        </table> 
+    </div> 
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row">
+                {{ form_start(formPlan, {'attr':{'class':'planes', 'novalidate': 'novalidate'}}) }}
+                <div class="col"> {{ form_widget(formPlan.diagrama, {'attr':{'class' : 'form-control form-control-sm'}}) }} </div>
+                <div class="col">{{ form_widget(formPlan.procesar, {'attr':{'class' : 'btn btn-success btn-sm'}}) }}</div>            
+                {{ form_end(formPlan) }}
+            </div>
+      </div> 
+</div>
+{% endif %}
+
+
+
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    $(document).ready(function(){
+                                $('.planes').submit(function(event){
+                                                                event.preventDefault();
+                                                                var form = $(this);
+                                                                $.post(form.attr('action'),
+                                                                       form.serialize(),
+                                                                       function (data){
+                                                                                            alert(data.msge);
+                                                                       });
+                                });
+
+                                $('.add').submit(function(event){
+                                                                event.preventDefault();
+                                                                var form = $(this);
+                                                                $.post(form.attr('action'),
+                                                                       form.serialize(),
+                                                                       function (data){
+                                                                                        if (data.status)
+                                                                                            location.reload();
+                                                                                        else
+                                                                                            alert(data.msge);
+                                                                       });
+                                });
+
+                                $('.fina').click(function(event){
+                                                                event.preventDefault();
+                                                                var a = $(this);
+                                                                bootbox.confirm({
+                                                                    message: "Seguro finalizar el diagrama?",
+                                                                    buttons: {
+                                                                        confirm: {
+                                                                            label: 'Si',
+                                                                            className: 'btn-success'
+                                                                        },
+                                                                        cancel: {
+                                                                            label: 'No',
+                                                                            className: 'btn-danger'
+                                                                        }
+                                                                    },
+                                                                    callback: function (result) {
+                                                                        if (result){
+                                                                            $.post(a.attr('href'),
+                                                                                   function (data){
+                                                                                                    if (data.status)
+                                                                                                        window.location.href = "{{ path('taller_diagramar_tarea_listar') }}";
+                                                                                                    else
+                                                                                                        alert(data.msge);
+                                                                                   });
+                                                                        }
+                                                                    }
+                                                                });                                                                 
+
+                                });        
+
+                                $('.deleteit').click(function(event){
+                                                                event.preventDefault();
+                                                                var a = $(this);
+                                                                bootbox.confirm({
+                                                                    message: "Seguro quitar la tarea?",
+                                                                    buttons: {
+                                                                        confirm: {
+                                                                            label: 'Si',
+                                                                            className: 'btn-success'
+                                                                        },
+                                                                        cancel: {
+                                                                            label: 'No',
+                                                                            className: 'btn-danger'
+                                                                        }
+                                                                    },
+                                                                    callback: function (result) {
+                                                                        if (result){
+                                                                            $.post(a.attr('href'),
+                                                                                   function (data){
+                                                                                                    if (data.status)
+                                                                                                        location.reload();
+                                                                                                    else
+                                                                                                        alert(data.msge);
+                                                                                   });
+                                                                        }
+                                                                    }
+                                                                });                                                                 
+
+                                });   
+
+
+    });
+</script>
+{% endblock %}

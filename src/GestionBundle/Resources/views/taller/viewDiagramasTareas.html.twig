@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+        <span class="h5">Cargar diagramas tareas</span>
+            {{ form_start(form, {'attr':{'class':'add', 'novalidate': 'novalidate'}}) }}        
+        <div class="row">
+            <div class="col">            {{ form_widget(form.desde, {'attr':{'class' : 'form-control form-control-sm hidden'}}) }}</div>
+            <div class="col">            {{ form_widget(form.empleado, {'attr':{'class' : 'form-control form-control-sm'}}) }}  </div>
+            <div class="col">            {{ form_widget(form.save, {'attr':{'class' : 'btn btn-success btn-sm'}}) }}   </div>                                         
+        </div>
+            {{ form_end(form) }}          
+
+
+		
+
+
+    {% if diagramas is defined %} 
+    <br>
+    <table class="table table-striped table-hover table-bordered results table-sm estilo1">
+                    <thead>
+                        <tr>
+                            <th>Numero</th>
+                            <th>Fecha</th>
+                            <th>Responsable</th>
+                            <th>Diagramado Por</th>
+                            <th>Cantidad de Tareas</th>     
+                            <th></th>                
+                        </tr>
+                    </thead>
+                    <tbody>                     
+                        {% for mov in diagramas %}
+                            <tr>
+                                <td>{{ mov.id}} </td>                                
+                                <td>{{ mov.fecha | date("d/m/Y") }}</td>
+                                <td>{{ mov.responsable }} </td>
+                                <td>{{ mov.usuarioCarga}} </td>
+                                <td>{{ mov.tareasProgramadas | length }} </td>           
+                                <td>
+                                    <a href="{{path('taller_diagramar_agregar_tareas', {'id': mov.id})}}" class="btn btn-sm btn-info">Ver detalle</a>
+                                    <a href="{{path('taller_diagramar_tareas_procesar', {'id': mov.id})}}" class="btn btn-sm btn-warning">Procesar</a>              
+                                    <a href="{{path('taller_diagramar_tareas_imprimir', {'id': mov.id})}}" target="_blanck" class="btn btn-sm btn-success">Imprimir</a>                                                               
+                                </td>
+                            </tr>
+                        {% endfor %}
+                     </tbody>
+    </table>   
+{% endif %}
+	</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+</script>
+{% endblock %}

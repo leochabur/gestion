@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<span class="h5">Ingreso Anomalia</span>
+
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+		<div class="form-group row">
+		    <div class=" col-md-3">
+    			{{	form_label(form.fecha)	}}
+    			{{	form_widget(form.fecha, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.fecha) }}
+    			</span>
+			</div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                {{  form_label(form.numPlanilla, 'Nro. Planilla')    }}
+                {{  form_widget(form.numPlanilla, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.numPlanilla) }}
+                </span>
+            </div>    
+        </div>             
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.tipoDesperfecto)    }}
+                {{  form_widget(form.tipoDesperfecto, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.tipoDesperfecto) }}
+                </span>
+            </div>    
+        </div>        
+        <div class="form-group row">
+            <div class="col-md-6">
+                {{  form_label(form.observacion, 'Descripcion')    }}
+                {{  form_widget(form.observacion, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.observacion) }}
+                </span>
+            </div>    
+		</div>        
+		<div class="form-group row">
+		    <div class="col-md-3">
+    			{{	form_label(form.unidad)	}}
+    			{{	form_widget(form.unidad, {'attr':{'class' : 'form-control form-control-sm'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.unidad) }}
+    			</span>
+			</div>		      
+		</div>
+		<div class="form-group row">
+			<div class="col-md-2">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>
+		</div>	
+	 {{ form_end(form) }}
+
+
+	</div>
+{% endblock %}

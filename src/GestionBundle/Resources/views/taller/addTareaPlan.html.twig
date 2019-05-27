@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<span class="h5">Asignar Tarea</span>
+
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+        <div class="form-group row">
+            <div class="col-md-3">
+                {{  form_label(form.planes)    }}
+                {{  form_widget(form.planes, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.planes) }}
+                </span>
+            </div>    
+        </div>
+        {% if view is defined %}
+            Tareas asignadas al plan: {{ plan }}
+            <div class="form-group col-md-6">
+                <ul class="list-group">
+                  {% for tarea in plan.tareas %}
+                      <li class="list-group-item d-flex justify-content-between align-items-center">{{ tarea }}
+                      <span class="badge badge-primary badge-pill">{{ tarea.unidades.count }}</span>
+                      </li>
+                  {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.tareas)    }}
+                {{  form_widget(form.tareas, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.tareas) }}
+                </span>
+            </div>    
+        </div>        
+
+		<div class="form-group row">
+			<div class="col-md-2">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>
+            <div class="col-md-2">
+                {{ form_widget(form.view, {'attr':{'class' : 'btn btn-warning'}})}}
+            </div>            
+		</div>	
+	 {{ form_end(form) }}
+	</div>
+{% endblock %}

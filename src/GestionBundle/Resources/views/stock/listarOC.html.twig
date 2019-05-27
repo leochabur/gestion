@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+                <table class="table table-striped table-hover table-bordered results table-sm size">
+                        <thead>
+                            <tr>
+                                <th>N° OC</th>
+                                <th>Fecha</th>  
+                                <th>Proveedor</th> 
+                                <th>Cant. Articulos</th>
+                                <th>Estado</th> 
+                                <th>Ver Detalle</th>                                                          
+                            </tr>
+                        </thead>
+                        <tbody>                     
+                            {% for it in ordenes %}
+                                <tr>                                                    
+                                    <td>{{ it.id }} </td>
+                                    <td> {{ it.fecha | date('d/m/Y') }} </td>     
+                                    <td>{{ it.proveedor }} </td>       
+                                    <td>{{ it.items|length  }}</td>
+                                    <td>{% if it.eliminada %} Eliminada{% elseif it.autorizada %} Autorizada {% else %} Pendiente {% endif %}</td>                                      
+                                    <td><a href="{{ path('gestion_inventario_orden_compra_asignar', {'id' : it.id})}}" class="btn btn-sm btn-success">Ver Detalle</a>
+                                        {% if not it.autorizada %}
+                                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                                <a href="{{ path('gestion_inventario_ordenes_compra_autorizar', {'id' : it.id})}}" data-msge="Autorizar" class="btn btn-sm btn-warning aut">Autorizar</a>                               
+                                            {% endif %}
+                                        {%  else %}
+                                            {% if it.impresa %}
+                                                <a href="{{ path('gestion_inventario_ordenes_compra_imprimir', {'id' : it.id})}}" data-msge="Imprimir" class="btn btn-sm btn-secondary aut">Imprimir</a>
+                                            {% else %}                                        
+                                                <a href="{{ path('gestion_inventario_ordenes_compra_imprimir', {'id' : it.id})}}" data-msge="Imprimir" class="btn btn-sm btn-info aut">Imprimir</a>
+                                            {% endif %}
+                                            <a href="{{ path('gestion_inventario_orden_compra_ingresar_stock', {'id' : it.id})}}" data-msge="Ingresar Stock" class="btn btn-sm btn-dark">Ingresar Stock</a>
+                                        {% endif %}
+                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                            <a href="{{ path('gestion_inventario_ordenes_compra_eliminar', {'id' : it.id})}}" data-msge="Eliminar" class="btn btn-sm btn-danger aut">Eliminar</a>
+                                            {% if it.autorizada %}
+                                                <a href="{{ path('gestion_inventario_ordenes_compra_abrir', {'id' : it.id})}}" data-msge="Abrir" class="btn btn-sm btn-primary aut">Abrir</a>
+                                            {% endif %}                                            
+                                        {% endif %}
+
+                                    </td>                                     
+                                </tr>
+                            {% endfor %}
+                         </tbody>
+                </table>                 
+	</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(document).ready(function(){
+                                $(".aut").click(function(event){
+                                                                event.preventDefault();
+                                                                var a = $(this);
+                                                                bootbox.confirm({
+                                                                    message: "Seguro "+a.data('msge')+" la orden?",
+                                                                    buttons: {
+                                                                        confirm: {
+                                                                            label: 'Si',
+                                                                            className: 'btn-success'
+                                                                        },
+                                                                        cancel: {
+                                                                            label: 'No',
+                                                                            className: 'btn-danger'
+                                                                        }
+                                                                    },
+                                                                    callback: function (result) {
+                                                                        if (result){
+                                                                                    $.post(a.attr('href'),function(data){
+                                                                                                                        if (data.status)
+                                                                                                                                        location.reload();
+                                                                                                                        else
+                                                                                                                                        alert(data.msge);
+                                                                                    });
+                                                                        }
+                                                                    }
+                                                                });                                                                  
+                                });
+    });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,24 @@
+gestion:
+    resource: "@GestionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gestion_financiera:
+    resource: "@GestionBundle/Resources/config/routing_financiera.yml"
+    prefix:   /
+
+gestion_trafico:
+    resource: "@GestionBundle/Resources/config/routing_trafico.yml"
+    prefix:   /
+
+gestion_taller:
+    resource: "@GestionBundle/Resources/config/routing_taller.yml"
+    prefix:   /
+
+gestion_inventario:
+    resource: "@GestionBundle/Resources/config/routing_inventario.yml"
+    prefix:   /
+
+gestion_usuarios:
+    resource: "@GestionUsuariosBundle/Resources/config/routing.yml"
+    prefix:   /    
+

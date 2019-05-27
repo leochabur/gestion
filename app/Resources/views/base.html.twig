@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Servicios anomalias!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('public/css/bootstrap.min.css')}}">
+            <link rel="stylesheet" href="{{ asset('public/css/estilos.css')}}">            
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+      
+    </head>
+    <body>
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+
+  <div class="collapse navbar-collapse container" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Altas
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item btn" href="{{ path('mant_alta_proveedor')}}">Alta de Proveedor</a>
+            <a class="dropdown-item btn" href="{{ path('mant_alta_articulo')}}">Alta de Articulo</a>
+            <a class="dropdown-item btn" href="{{ path('mant_listado_articulos')}}">Listado de Articulo</a>            
+          </div>
+      </li>           
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Stock
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('mant_alta_entrada_stock')}}">Ingreso Mercaderias</a>
+            <a class="dropdown-item" href="{{ path('mant_alta_salida_stock')}}">Egreso Mercaderias</a>
+            <a class="dropdown-item" href="{{ path('mant_resumen_cta_articulo')}}">Ver Stock Articulos</a>        
+            <a class="dropdown-item" href="{{ path('mant_consumos_por_periodo')}}">Consumos por periodo</a>    
+          </div>        
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Cta. Cte.
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('gestion_ctacte_proveedor')}}">Ver Cta Cte Proveedor</a>
+            <a class="dropdown-item" href="{{ path('gestion_ctacte_proveedor_ingreso_debito')}}">Ingresar Debito</a>         
+            <a class="dropdown-item" href="{{ path('gestion_ctacte_proveedor_ingreso_credito')}}">Ingresar Credito</a>                 
+          </div>        
+      </li>      
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Finanzas
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('gestion_ctacte_proveedor_ingreso_mov_financiero')}}">Cargar Planes de Pago</a>       
+            <a class="dropdown-item" href="{{ path('gestion_ctacte_vtos_periodo')}}">Vtos por periodo</a>         
+            <a class="dropdown-item" href="{{ path('gestion_subsidios_cargar')}}">Cargar Archivo Pagos</a>        
+            <a class="dropdown-item" href="{{ path('gestion_subsidios_cargar_manual')}}">Cargar Pago Manual</a>        
+            <a class="dropdown-item" href="{{ path('gestion_subsidios_acreditacion')}}">Cargar Acreditacion</a>        
+            <a class="dropdown-item" href="{{ path('gestion_subsidios_acreditaciones_cargadas')}}">Ver Acreditaciones</a>          
+            <a class="dropdown-item" href="{{ path('gestion_subsidios_pagos_pendientes')}}">Pagos Pendientes</a>   
+
+          </div>        
+      </li>        
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Gestion Taller
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('taller_alta_anomalia')}}">Ingreso Anomalias</a>       
+            <a class="dropdown-item" href="{{ path('taller_lista_anomalia')}}">Lista Anomalias</a>   
+            <a class="dropdown-item" href="{{ path('taller_diagramar_tarea')}}">Diagramar Tareas</a>      
+            <a class="dropdown-item" href="{{ path('taller_diagramar_tarea_listar')}}">Listar Diagramar Tareas</a>               
+            <a class="dropdown-item" href="{{ path('taller_recepcionar_form0015')}}">Recepcionar F0015</a>                         
+
+            
+          </div>        
+      </li>      
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Planes Mantenimiento
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('taller_nueva_tarea_plan_mantenimiento')}}">Nueva Tarea</a>       
+            <a class="dropdown-item" href="{{ path('taller_asignar_tarea_plan')}}">Asignar Tareas a Plan</a>   
+        
+          </div>        
+      </li>       
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Gestion stock
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('gestion_inventario_orden_compra')}}">Nueva Orden Compra</a>        
+            <a class="dropdown-item" href="{{ path('gestion_inventario_ordenes_compra_list')}}">Listar Orden Compra</a>              
+          </div>        
+      </li>             
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Trafico
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('gestion_trafico_imprimir_planillas')}}">Imprimir Diagrama</a>         
+        
+          </div>        
+      </li>              
+    </ul>
+  </div>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{ path('gestion_usuarios_logout')}}"><span class="glyphicon glyphicon-user"></span> Cerrar Sesion</a></li>
+        </ul>
+</nav> 
+
+{%  endif %}       
+        {% block body %}
+
+        {% endblock %}
+
+    </body>
+        {% block javascripts %}
+            <script src="{{ asset('public/js/jquery-1.11.1.min.js') }}"></script>
+            <script src="{{ asset('public/js/bootstrap.min.js') }}"></script>           
+            <script src="{{ asset('public/js/bootbox.min.js') }}"></script>           
+        {% endblock %}      
+</html>

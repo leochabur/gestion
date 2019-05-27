@@ -1,0 +1,53 @@
+gestion_inventario_orden_compra:
+    path:     /inventario/oc
+    defaults: { _controller: GestionBundle:GestionInventario:nuevaOrdenCompra }   
+
+gestion_inventario_orden_compra_procesar:
+    path:     /inventario/ocproc
+    defaults: { _controller: GestionBundle:GestionInventario:procesarOrdenCompra }       
+    methods: POST
+
+gestion_inventario_orden_compra_asignar:
+    path:     /inventario/ocasig/{id}
+    defaults: { _controller: GestionBundle:GestionInventario:aisgnarOrdenCompra }    
+
+#INGRESAR ARTICULOS DE LA OC AL STOCK
+gestion_inventario_orden_compra_ingresar_stock:
+    path:     /inventario/ingstock/{id}
+    defaults: { _controller: GestionBundle:GestionInventario:ingresarStockOc }       
+
+gestion_inventario_orden_compra_ingresar_stock_procesar:
+    path:     /inventario/ingstockproc/{item}
+    defaults: { _controller: GestionBundle:GestionInventario:ingresarStockOcProcesar }       
+
+#fin ingresar articulos   
+
+gestion_inventario_add_articulo_orden_compra:
+    path:     /inventario/addart/{oc}/{art}
+    defaults: { _controller: GestionBundle:GestionInventario:addArtOC }
+    methods:  POST       
+
+gestion_inventario_delete_item_orden_compra:
+    path:     /inventario/delitem/{it}
+    defaults: { _controller: GestionBundle:GestionInventario:deleteItem }
+    methods:  POST     
+
+gestion_inventario_ordenes_compra_list:
+    path:     /inventario/listoc
+    defaults: { _controller: GestionBundle:GestionInventario:listarOC } 
+
+gestion_inventario_ordenes_compra_autorizar:
+    path:     /inventario/autoc/{id}
+    defaults: { _controller: GestionBundle:GestionInventario:autorizarOC }     
+
+gestion_inventario_ordenes_compra_imprimir:
+    path:     /inventario/impoc/{id}
+    defaults: { _controller: GestionBundle:GestionInventario:imprimirOC }       
+
+gestion_inventario_ordenes_compra_eliminar:
+    path:     /inventario/delete/{id}
+    defaults: { _controller: GestionBundle:GestionInventario:deleteOC }      
+
+gestion_inventario_ordenes_compra_abrir:
+    path:     /inventario/open/{id}
+    defaults: { _controller: GestionBundle:GestionInventario:openOC }        

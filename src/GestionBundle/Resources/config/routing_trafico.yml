@@ -1,0 +1,18 @@
+gestion_trafico_alta_notificacion_inspector:
+    path:     /trafico/notinsp
+    defaults: { _controller: GestionBundle:GestionTrafico:notificacionInspector }
+
+gestion_trafico_alta_notificacion_inspector_procesar:
+    path:     /trafico/notinsproc
+    defaults: { _controller: GestionBundle:GestionTrafico:notificacionInspectorProcesar }
+    methods: POST    
+
+gestion_trafico_imprimir_planillas:
+    path:     /trafico/imprimir
+    defaults: { _controller: GestionBundle:GestionTrafico:printPlanillas }
+    methods: [GET, POST]       
+
+gestion_trafico_print_planilla:
+    path:     /trafico/print/{reco}
+    defaults: { _controller: GestionBundle:GestionTrafico:print }
+    methods: [GET, POST]       

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+    <span class="h5">Registrar Notificacion</span>
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+
+        <div class="form-group row">
+            <div class=" col-md-3">
+                {{  form_label(form.notificacion.fecha)   }}
+                {{  form_widget(form.notificacion.fecha, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.notificacion.fecha) }}
+                </span>
+            </div>
+            <div class=" col-md-3">
+                {{  form_label(form.notificacion.hora)   }}
+                {{  form_widget(form.notificacion.hora, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.notificacion.hora) }}
+                </span>
+            </div>
+        </div>        
+        <div class="form-group row">
+            <div class="col-md-6">
+                {{  form_label(form.notificacion.responsableAlta, 'Informado por...')    }}
+                {{  form_widget(form.notificacion.responsableAlta, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.notificacion.responsableAlta) }}
+                </span>
+            </div>    
+        </div>           
+        <div class="form-group row">
+            <div class="col-md-6">
+                {{  form_label(form.notificacion.descripcion)    }}
+                {{  form_widget(form.notificacion.descripcion, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.notificacion.descripcion) }}
+                </span>
+            </div>    
+        </div>        
+        <div class="form-group row">
+            <div class="col-md-4">
+                {{  form_label(form.personalAfectado)    }}
+                {{  form_widget(form.personalAfectado, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.personalAfectado) }}
+                </span>
+            </div>    
+            <div class="col-md-2">
+                {{  form_label(form.unidadAfectada)    }}
+                {{  form_widget(form.unidadAfectada, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.unidadAfectada) }}
+                </span>
+            </div>  
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+            </div>
+        </div>  
+	{{ form_end(form) }}
+	</div>
+{% endblock %}

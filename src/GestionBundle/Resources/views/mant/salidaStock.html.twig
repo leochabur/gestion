@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+            <span class="h4">Registrar Salida Stock</span>
+        <br>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+
+		<div class="form-group row">
+		    <div class=" col-md-3">
+    			{{	form_label(form.movimiento.fecha)	}}
+    			{{	form_widget(form.movimiento.fecha, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.movimiento.fecha) }}
+    			</span>
+			</div>
+    		<div class="col-md-3">
+    			{{	form_label(form.movimiento.cantidad)	}}
+    			{{	form_widget(form.movimiento.cantidad, {'attr':{'class' : 'form-control form-control-sm'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.movimiento.cantidad) }}
+    			</span>
+    		</div>				
+		</div>
+		<div class="form-group row">
+		    <div class=" col-md-3">
+    			{{	form_label(form.movimiento.numComprobante)	}}
+    			{{	form_widget(form.movimiento.numComprobante, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.movimiento.numComprobante) }}
+    			</span>
+			</div>
+    		<div class="col-md-5">
+    			{{	form_label(form.movimiento.articulo)	}}
+    			{{	form_widget(form.movimiento.articulo, {'attr':{'class' : 'form-control form-control-sm articulo'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.movimiento.articulo) }}
+    			</span>
+    		</div>				
+		</div>
+		<div class="form-group row">
+		    <div class="col-md-3">
+    			{{	form_label(form.unidad)	}}
+    			{{	form_widget(form.unidad, {'attr':{'class' : 'form-control form-control-sm'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.unidad) }}
+    			</span>
+			</div>		
+            <div class="col-md-3">
+                {{  form_label(form.movimiento.origenMovimiento)  }}
+                {{  form_widget(form.movimiento.origenMovimiento, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.movimiento.origenMovimiento) }}
+                </span>
+            </div>              
+		</div>
+        <div class="form-group col-8">
+            {{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+        </div>     
+                     <div class="form-group row invisible">
+            <div class="col-md-3">
+                {{  form_label(form.movimiento.precioUnitario) }}
+                {{  form_widget(form.movimiento.precioUnitario, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.movimiento.precioUnitario) }}
+                </span>
+            </div>  
+        </div>          
+    
+{{ form_end(form) }}
+        {% if articulos is defined %}
+                    <input type="text" class="search form-control col-4" id="search" placeholder="Codigo/Descripcion">
+                    <table class="table table-striped table-hover table-bordered results table-sm estilo1">
+                    <thead>
+                        <tr>
+                            <th>Descripcion</th>
+                            <th>Codigo Barras</th>                        
+                        </tr>
+                    </thead>
+                    <tbody>                     
+                        {% for art in articulos %}
+                            <tr class="finder" data-id="{{ art.id }}">
+                                <td>{{ art.descripcion}}</td>
+                                <td>{{ art.codigoBarras }} </td>
+                            </tr>
+                        {% endfor %}
+                     </tbody>
+                     </table>   
+        {% endif %}
+
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(document).ready(function() {
+            $('#search').keyup(function (e) {
+                                  var searchTerm = $(".search").val();
+                                  var searchSplit = searchTerm.replace(/ /g, "'):containsi('");
+                                  
+                                  $.extend($.expr[':'], {'containsi': function(elem, i, match, array){
+                                        return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                                    }
+                                  });
+                                    
+                                  $(".finder").not(":containsi('" + searchSplit + "')").each(function(e){
+                                    $(this).hide();
+                                  });
+                                
+                                  $(".finder:containsi('" + searchSplit + "')").each(function(e){
+                                    $(this).show();
+                                  });
+
+                                  var jobCount = $('table tbody tr[visible="true"]').lenght;     
+                                  console.log(jobCount);  
+                                  if(jobCount){
+                                        alert('uni');
+                                        if(e.which == 13) {
+                                                $('.results tbody tr[visible="true"]').trigger( "click" );                                      
+                                              }
+                                   }                          
+            });  
+
+            $('.finder').click(function(){
+                                            var tr = $(this).data('id');
+                                            $(".articulo").val(tr);
+            }) ;
+    });
+    </script>
+
+{% endblock %}

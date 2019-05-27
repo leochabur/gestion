@@ -1,0 +1,61 @@
+mant_index:
+    path:     /
+    defaults: { _controller: GestionBundle:GestionMant:index }
+
+mant_alta_proveedor:
+    path:     /gestion/proveedorup
+    defaults: { _controller: GestionBundle:GestionMant:proveedorAlta }
+
+mant_procesar_proveedor:
+    path:     /gestion/procproov
+    defaults: { _controller: GestionBundle:GestionMant:procesarProveedor }    
+
+mant_alta_articulo:
+    path:     /gestion/articuloup
+    defaults: { _controller: GestionBundle:GestionMant:articuloAlta }
+
+mant_procesar_articulo:
+    path:     /gestion/procarticulo
+    defaults: { _controller: GestionBundle:GestionMant:procesarArticulo }        
+
+mant_alta_entrada_stock:
+    path:     /gestion/entradaup
+    defaults: { _controller: GestionBundle:GestionMant:entradaStockAlta }
+
+mant_procesar_entrada_stock:
+    path:     /gestion/procentradastock
+    defaults: { _controller: GestionBundle:GestionMant:procesarEntradaStock }        
+
+mant_alta_salida_stock:
+    path:     /gestion/salidaup
+    defaults: { _controller: GestionBundle:GestionMant:salidaStockAlta }    
+
+mant_procesar_salida_stock:
+    path:     /gestion/procsalidastock
+    defaults: { _controller: GestionBundle:GestionMant:procesarSalidaStock }   
+
+mant_resumen_cta_articulo:
+    path:     /gestion/resctaart/{art}
+    defaults: { _controller: GestionBundle:GestionMant:resumenCtaArticulo, art: 0 }       
+
+mant_consumos_por_periodo:
+    path:     /gestion/conspdo
+    defaults: { _controller: GestionBundle:GestionMant:consumoPeriodo }            
+
+mant_listado_articulos:
+    path:     /gestion/listart
+    defaults: { _controller: GestionBundle:GestionMant:listadoArticulos }         
+
+mant_editar_articulo:
+    path:     /gestion/editart/{id}
+    defaults: { _controller: GestionBundle:GestionMant:editArticulo }   
+
+mant_articulo_update:
+    path:     /gestion/updateart/{id}
+    defaults: { _controller: GestionBundle:GestionMant:updateArticulo }   
+    methods: POST    
+
+mant_delete_movimiento:
+    path:     /gestion/delmov/{mov}
+    defaults: { _controller: GestionBundle:GestionMant:deleteMovimiento }   
+    methods: POST

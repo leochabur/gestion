@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<span class="h5">Acreditaciones</span>
+
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+			<div class="form-group row">
+			    <div class="col-md-3">
+	    			{{	form_widget(form.acreditacion, {'attr':{'class' : 'form-control form-control-sm'}})}}
+	    			<span class="text-danger">
+	    				{{ form_errors(form.acreditacion) }}
+	    			</span>
+				</div>		
+			</div>
+			<div class="form-group row">
+			    <div class="col-md-2">
+	    			{{	form_widget(form.load, {'attr':{'class' : 'btn btn-success'}})}}
+				</div>			
+			    <div class="col-md-2">
+	    			{{	form_widget(form.view, {'attr':{'class' : 'btn btn-warning'}})}}
+				</div>			
+	        </div>
+	 {{ form_end(form) }}
+	{% if acreditacion is defined %}
+		<span class="h3">{{ acreditacion }}</span>
+						<table class="table table-striped table-hover table-bordered results table-sm">
+						<thead>
+							<tr>
+	                            <th>N° Pago</th>	
+	                            <th>Mes</th>                            
+	                            <th>Año</th>
+	                            <th>Detalle</th>
+	                            <th>Importe</th>                          
+							</tr>
+						</thead>
+						<tbody>						
+					        {% for mov in acreditacion.pagos %}
+	                            <tr>
+                                <td>{{ mov.numeroPago}}</td>
+                                <td>{{ mov.periodoMes}}</td>
+                                <td>{{ mov.periodoAnio}}</td> 
+                                <td>{{ mov.concepto }}</td>                                                          
+                                <td align="right">{{ mov.monto|number_format(2, '.', '') }}</td>
+	                            </tr>
+					        {% endfor %}
+					     </tbody>
+					     </table>	
+	{% endif %}	 
+
+	{% if lista is defined %}
+						<table class="table table-striped table-hover table-bordered results table-sm">
+						<thead>
+							<tr>
+	                            <th>Fecha</th>	
+	                            <th>Cant. Pagos</th>                            
+	                            <th>Importe</th>                          
+							</tr>
+						</thead>
+						<tbody>						
+					        {% for mov in lista %}
+	                            <tr>
+                                <td>{{ mov.fecha | date("d/m/Y") }}</td>
+                                <td>{{ mov.pagos.count}}</td>                                                  
+                                <td align="right">{{ mov.importe|number_format(2, '.', '') }}</td>
+	                            </tr>
+					        {% endfor %}
+					     </tbody>
+					     </table>	
+	{% endif %}	 
+
+	</div>
+{% endblock %}
+
+{% block javascript %}
+	{{ parent() }}
+	
+	<script type="text/javascript">
+		$('select').chan
+	</script>
+
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<span class="h5">Recepcionar F 0015</span>
+
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+		<div class="form-group row">
+            <div class=" col-md-3">
+                {{  form_label(form.numero)  }}
+                {{  form_widget(form.numero, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.numero) }}
+                </span>
+            </div>            
+        </div>
+		<div class="form-group row">
+			<div class="col-md-2">
+				{{ form_widget(form.load, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>
+		</div>	
+	 {{ form_end(form) }}
+    {% for message in app.session.flashBag.get('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.session.flashBag.get('warning') %}
+        <div class="alert alert-warning" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}    
+    {% if planilla is defined %} 
+        <div class="row">
+            <span class="h5 col">{{ planilla.conductor }}</span>
+            <span class="h5 col">{{ planilla.fecha|date('d/m/Y') }}</span>
+        </div>
+        {% if not cerrada %}
+        <div class="row">
+            {{ form_start(actions, {'attr': {'novalidate': 'novalidate', 'role':'form', 'class':'accionForm'}})}}
+            {{ form_widget(actions.close, {'attr':{'class' : 'btn btn-info action', 'data-action':'Cerrar', 'data-code':'c'}})}}
+            {{ form_widget(actions.delete, {'attr':{'class' : 'btn btn-danger action', 'data-action':'Eliminar', 'data-code':'d'}})}}           
+            {{ form_widget(actions.action)}}                 
+            {{ form_end(actions) }}
+        </div>    
+    {% endif %}
+        <div class="row">
+            
+                {% for novInt in planilla.novedad %}
+                    <div class="col-4">
+                        
+                        <table class="table">
+                               <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-center"><span class="h5">{{ novInt.unidad }}</span></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Anomalia</th>
+                                        <th>Fallo?</th>
+                                    </tr>
+                               </thead> 
+                               <tbody>
+                                    {% for result in novInt.resultadosNovedad %}
+                                        <tr>
+                                            <td>{{ result.itemNovedad }}</td>
+                                            {%  if not cerrada %}
+                                                {{ form_start(results[result.id], {'attr':{'novalidate':'novalidate', 'class':'result'}})}}
+                                                <td class="row">
+                                                {{ form_widget(results[result.id].fallo, {'attr':{'class' : 'form-control form-control-sm col-3'}}) }}
+                                                {{  form_widget(results[result.id].obs, {'attr':{'class' : 'form-control form-control-sm col-6'}})}}  
+                                                {{ form_widget(results[result.id].load, {'attr':{'class' : 'btn btn-warning btn-sm col-3'}})}}
+                                                </td>                                                                                            
+                                                {{ form_end(results[result.id]) }}
+                                            {% else %}
+                                                <td class="row">
+                                                    <span class="col-3">{% if result.falla %} SI {% else %}NO{% endif %}</span>
+                                                    <span class="col-6">{{result.observacion}}</span>
+                                                </td>
+                                            {% endif %}
+
+                                            
+                                        </tr>
+                                    {% endfor %}
+                               </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+        </div>
+{% endif %}
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+                                    $('.result').submit(function(event){
+                                                                        event.preventDefault();
+                                                                        var form = $(this);
+                                                                        $.post(form.attr('action'),
+                                                                               form.serialize(),
+                                                                               function(data){
+                                                                                                alert(data.msge);
+                                                                               });
+                                    });
+                                    $('.action').click(function(event){
+                                                                        event.preventDefault();
+                                                                        var a = $(this);
+                                                                        $('#form_action').val(a.data('code'));
+                                                                        var form = $('.accionForm');
+                                                                        bootbox.confirm({
+                                                                            message: "Seguro "+a.data('action')+" la planilla de novedades?",
+                                                                            buttons: {
+                                                                                confirm: {
+                                                                                    label: 'Si',
+                                                                                    className: 'btn-success'
+                                                                                },
+                                                                                cancel: {
+                                                                                    label: 'No',
+                                                                                    className: 'btn-danger'
+                                                                                }
+                                                                            },
+                                                                            callback: function (result) {
+                                                                                if (result){
+                                                                                   
+                                                                                    $.post(form.attr('action'),
+                                                                                           form.serialize(),
+                                                                                           function(data){
+                                                                                                            if (data.status)
+                                                                                                                $(location).attr('href','{{path('taller_recepcionar_form0015')}}');
+                                                                                           }); 
+                                                                                }
+                                                                            }
+                                                                        });                                                                                                                                                
+                                    });
+        });
+        
+    </script>
+{% endblock %}

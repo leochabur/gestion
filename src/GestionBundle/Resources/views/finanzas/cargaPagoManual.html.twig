@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+    <span class="h5">Registrar Pago</span>
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+
+        <div class="form-group row">
+            <div class=" col-md-3">
+                {{  form_label(form.periodoMes)   }}
+                {{  form_widget(form.periodoMes, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.periodoMes) }}
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.periodoAnio)    }}
+                {{  form_widget(form.periodoAnio, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.periodoAnio) }}
+                </span>
+            </div>    
+        </div>        
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.numeroPago)    }}
+                {{  form_widget(form.numeroPago, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.numeroPago) }}
+                </span>
+            </div>    
+        </div>  
+        <div class="form-group row">
+            <div class="col-md-6">
+                {{  form_label(form.concepto)    }}
+                {{  form_widget(form.concepto, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.concepto) }}
+                </span>
+            </div>    
+        </div>              
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.monto)    }}
+                {{  form_widget(form.monto, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.monto) }}
+                </span>
+            </div>    
+        </div> 
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+            </div>
+        </div>  
+	{{ form_end(form) }}
+	</div>
+{% endblock %}

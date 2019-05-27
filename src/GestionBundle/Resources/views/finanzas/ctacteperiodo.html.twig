@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<span class="h5">Vecimientos por Periodo</span>
+
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+			<div class="form-group row">
+			    <div class="col-md-3">
+	    			{{	form_label(form.desde)	}}
+	    			{{	form_widget(form.desde, {'attr':{'class' : 'form-control form-control-sm'}})}}
+	    			<span class="text-danger">
+	    				{{ form_errors(form.desde) }}
+	    			</span>
+				</div>
+			    <div class="col-md-3">
+	    			{{	form_label(form.hasta)	}}
+	    			{{	form_widget(form.hasta, {'attr':{'class' : 'form-control form-control-sm'}})}}
+	    			<span class="text-danger">
+	    				{{ form_errors(form.hasta) }}
+	    			</span>
+				</div>				
+			</div>
+			<div class="form-group row">
+			    <div class="col-md-3">
+	    			{{	form_widget(form.load, {'attr':{'class' : 'btn btn-success'}})}}
+				</div>				
+	        </div>
+	 {{ form_end(form) }}
+
+	{% if vtos is defined %}
+	{% set sum = 0 %}	
+						<table class="table table-striped table-hover table-bordered results table-sm">
+						<thead>
+							<tr>
+	                            <th>Fecha</th>
+	                            <th>N° Cuota</th>	
+	                            <th>Interno</th>                            
+	                            <th>Movimiento</th>
+	                            <th>Detalle</th>
+	                            <th>Debito</th>
+	                            <th>Credito</th>
+	                            <th>Saldo</th>                            
+							</tr>
+						</thead>
+						<tbody>						
+					        {% for mov in vtos %}
+					        	{% set sum = sum + mov.credito - mov.debito %}
+	                            <tr>
+                                <td>{{ mov.fecha | date("d/m/Y") }}</td>
+                                <td> {% if mov.numeroCuota is defined %} {{ mov.numeroCuota }} {% endif %}</td>
+                                <td> {% if mov.unidad is defined %} {{ mov.unidad }} {% endif %}</td>   
+                                <td>{% if mov.concepto is defined %} {{ mov.concepto }} {% endif %}</td>                                                             
+                                <td>{{ mov.detalle }} </td>
+                                <td align="right">{{ mov.debito|number_format(2, '.', '') }}</td>
+                                <td align="right">{{ mov.credito|number_format(2, '.', '') }}</td>   
+                                <td align="right">{{ sum|number_format(2, '.', '')   }}</td>
+	                            </tr>
+					        {% endfor %}
+					     </tbody>
+					     </table>	
+	{% endif %}
+
+	</div>
+{% endblock %}

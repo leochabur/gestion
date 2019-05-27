@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+            <div class="form-group row">
+                <div class="col-md-3">
+                    {{  form_label(form.articulo)  }}
+                    {{  form_widget(form.articulo, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                    <span class="text-danger">
+                        {{ form_errors(form.articulo) }}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    {{  form_widget(form.load, {'attr':{'class' : 'btn btn-success'}})}}
+                </div>              
+            </div>
+     {{ form_end(form) }}
+
+
+{% if movimientos is defined %}
+{% set sum = 0 %}	
+					<table class="table table-striped table-hover table-bordered results table-sm estilo1">
+					<thead>
+						<tr>
+                            <th>Fecha</th>
+                            <th>Movimiento</th>
+                            <th>Articulo</th>
+                            <th>Interno</th>    
+                            <th>Ingreso</th>
+                            <th>Egreso</th>
+                            <th>Saldo</th>
+                            <th></th>                            
+						</tr>
+					</thead>
+					<tbody>						
+				        {% for mov in movimientos %}
+				        	{% set sum = sum + mov.ingreso - mov.egreso %}
+                            <tr>
+                                <td>{{ mov.fecha | date("d/m/Y") }}</td>
+                                <td>{{ mov.movimiento }} </td>
+                                <td>{{ mov.articulo }} </td>
+                                <td align="right">{{ mov.coche }}</td>
+                                <td align="right">{{ mov.ingreso|number_format(2, '.', '') }}</td>                                
+                                <td align="right">{{ mov.egreso|number_format(2, '.', '')  }}</td>
+                                <td align="right">{{ sum|number_format(2, '.', '')   }}</td>
+                                <td class="text-center">                 
+                                            {{ form_start(forms[mov.id], {'attr':{'class':'delete', 'novalidate': 'novalidate'}}) }}                                      
+                                            {{  form_widget(forms[mov.id].delete, {'attr':{'class' : 'btn btn-danger btn-sm'}}) }}
+                                            {{ form_end(forms[mov.id]) }}                                                              
+                                </td>                                
+                            </tr>
+				        {% endfor %}
+				     </tbody>
+				     </table>	
+
+
+
+{% endif %}
+
+
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('.delete').submit(function(event){
+                                            event.preventDefault();
+                                            var form = $(this);
+                                            bootbox.confirm({
+                                                message: "Seguro eliminar el movimiento?",
+                                                buttons: {
+                                                    confirm: {
+                                                        label: 'Si',
+                                                        className: 'btn-success'
+                                                    },
+                                                    cancel: {
+                                                        label: 'No',
+                                                        className: 'btn-danger'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result){
+                                                                $.post(form.attr('action'), form.serialize(), function(data){
+                                                                                                                if (data.status)
+                                                                                                                    location.reload();
+                                                                                                                else
+                                                                                                                    alert(data.msge);
+                                                                });
+                                                    }
+                                                }
+                                            });                                             
+
+        });
+    </script>
+{% endblock %}

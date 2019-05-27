@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+        <div class="d-block  p-2 bg-primary text-white">
+            Orden compra Nº {{ orden.id}}  -  {{ orden.proveedor }}
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            Ingresar articulos al stock
+          </div>
+          <div class="card-body">
+                        <table class="table table-striped table-hover table-bordered results table-sm size">
+                        <thead>
+                            <tr>
+                                <th>Descripcion</th>
+                                <th>
+                                    <div class="row">
+                                        <div class="col-3">Cantidad</div>
+                                        <div class="col-3">Unitario</div>
+                                        <div class="col-3">Interno</div>                                        
+                                        <div class="col-2">Guardar</div>
+                                    </div>
+                                </th>                                                               
+                            </tr>
+                        </thead>
+                        <tbody>                     
+                            {% for it in orden.items %}
+                                <tr>                                                    
+                                    <td>{{ it.articulo.descripcion | title }} </td>                                                              
+                                    <td class="text-center">    
+                                        {% if not it.ingresadoAStock %}   
+                                            {{ form_start(forms[it.id], {'attr':{'class':'update', 'novalidate': 'novalidate'}}) }}
+                                            <div class="form-row">
+                                                {{  form_widget(forms[it.id].cantidad, {'attr':{'class' : 'form-control form-control-sm col-3', 'placeholder' : 'Cant.'}}) }}
+                                                {{  form_widget(forms[it.id].precio, {'attr':{'class' : 'form-control form-control-sm col-3', 'placeholder' : 'Precio'}}) }}              
+                                                {{  form_widget(forms[it.id].unidad, {'attr':{'class' : 'form-control form-control-sm col-3', 'placeholder' : 'Precio'}}) }}
+                                                {{  form_widget(forms[it.id].add, {'attr':{'class' : 'btn btn-success btn-sm col-2'}}) }}
+                                            </div>
+                                            {{ form_end(forms[it.id]) }}        
+                                        {% else %}
+                                            <div class="form-row">
+                                                <div class="col-3">{{ it.cantidad }}</div>
+                                                <div class="col-3">{{ it.unitario }}</div>
+                                                <div class="col-3">{{ it.total }}</div>
+                                            </div>
+                                        {% endif %}                                                                                                    
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                         </tbody>
+                         </table>                
+          </div>
+        </div>
+        <div class="text-right"><a href="{{ path('gestion_inventario_orden_compra') }}" class="btn btn-warning">Finalizar Carga</a></div>
+         <br>    
+	</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(document).ready(function(){
+                $('.update').submit(function(event){
+                                                    event.preventDefault();
+                                                    $.post($(this).attr('action'), $(this).serialize(), function(data){
+
+                                                                                                                        if (data.status)
+                                                                                                                            location.reload();
+                                                                                                                        else
+                                                                                                                            alert(data.msge);
+                                                    });
+                });            
+    });
+    </script>
+{% endblock %}
+

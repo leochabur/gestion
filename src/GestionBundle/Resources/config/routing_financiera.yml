@@ -1,0 +1,84 @@
+gestion_ctacte_proveedor:
+    path:     /finanzas/ctacte
+    defaults: { _controller: GestionBundle:GestionFin:ctaCteProv }
+
+gestion_ctacte_proveedor_ingreso_debito:
+    path:     /finanzas/debito
+    defaults: { _controller: GestionBundle:GestionFin:ingresarDebito }
+
+gestion_ctacte_proveedor_ingreso_debito_procesar:
+    path:     /finanzas/debitoproc
+    defaults: { _controller: GestionBundle:GestionFin:ingresarDebitoProcesar }
+    methods: POST
+
+gestion_ctacte_proveedor_ingreso_credito:
+    path:     /finanzas/credito
+    defaults: { _controller: GestionBundle:GestionFin:ingresarCredito }
+
+gestion_ctacte_proveedor_ingreso_credito_procesar:
+    path:     /finanzas/creditoproc
+    defaults: { _controller: GestionBundle:GestionFin:ingresarCreditoProcesar }
+    methods: POST
+
+gestion_ctacte_proveedor_ingreso_mov_financiero:
+    path:     /finanzas/movimiento
+    defaults: { _controller: GestionBundle:GestionFin:ingresarMovimientoFinanciero }    
+
+gestion_ctacte_proveedor_ingreso_mov_financiero_procesar:
+    path:     /finanzas/movimientoproc
+    defaults: { _controller: GestionBundle:GestionFin:ingresarMovimientoFinancieroProcesar }
+    methods: POST    
+
+gestion_ctacte_vtos_periodo:
+    path:     /finanzas/vtopdo
+    defaults: { _controller: GestionBundle:GestionFin:vtosPeriodo }    
+
+gestion_ctacte_proveedor_delete_movimiento:
+    path:     /finanzas/deletemov/{id}
+    defaults: { _controller: GestionBundle:GestionFin:deleteMovimiento }
+    methods: [POST, GET]     
+
+gestion_ctacte_proveedor_uptade_movimiento:
+    path:     /finanzas/updmovimiento/{id}
+    defaults: { _controller: GestionBundle:GestionFin:updateMovimiento }
+    methods: [POST, GET]     
+
+gestion_subsidios_cargar_manual:
+    path:     /finanzas/cargasubman
+    defaults: { _controller: GestionBundle:GestionFin:cargaPagoSubsidio }
+
+gestion_subsidios_cargar_manual_procesa:
+    path:     /finanzas/cargasubmanproc
+    defaults: { _controller: GestionBundle:GestionFin:cargaPagoSubsidioProcesar }
+    path: POST    
+
+gestion_subsidios_cargar:
+    path:     /finanzas/cargasub
+    defaults: { _controller: GestionBundle:GestionFin:loadSubsidio }
+
+gestion_subsidios_procesar_archivo:
+    path:     /finanzas/cargasubproc
+    defaults: { _controller: GestionBundle:GestionFin:procesarLoadSubsidio }
+    methods: POST
+
+gestion_subsidios_acreditacion:
+    path:     /finanzas/acreditacion
+    defaults: { _controller: GestionBundle:GestionFin:loadAcreditacion}
+
+gestion_subsidios_acreditacion_procesar:
+    path:     /finanzas/procacred
+    defaults: { _controller: GestionBundle:GestionFin:procesarAcreditacion}
+    methods: POST    
+
+gestion_subsidios_add_pago_acreditacion:
+    path:     /finanzas/addpago/{acreditacion}/{pago}
+    defaults: { _controller: GestionBundle:GestionFin:addPagoAcreditacion}
+    methods: POST 
+
+gestion_subsidios_acreditaciones_cargadas:
+    path:     /finanzas/acrcargadas
+    defaults: { _controller: GestionBundle:GestionFin:listaAcreditaciones}
+
+gestion_subsidios_pagos_pendientes:
+    path:     /finanzas/pagospend
+    defaults: { _controller: GestionBundle:GestionFin:pagosPendientes}

@@ -1,0 +1,108 @@
+taller_alta_anomalia:
+    path:     /taller/upanom
+    defaults: { _controller: GestionBundle:GestionTaller:altaAnomalia}
+
+taller_alta_anomalia_procesar:
+    path:     /taller/procanom
+    defaults: { _controller: GestionBundle:GestionTaller:procesarAnomalia}
+    methods: POST   
+
+taller_lista_anomalia:
+    path:     /taller/listanom
+    defaults: { _controller: GestionBundle:GestionTaller:listaAnomalia}  
+
+taller_diagramar_tareas:
+    path:     /taller/diagtarea
+    defaults: { _controller: GestionBundle:GestionTaller:diagramarTarea}        
+    methods: [GET, POST]
+
+taller_nueva_tarea_plan_mantenimiento:
+    path:     /taller/addtarea
+    defaults: { _controller: GestionBundle:GestionTaller:nuevaTareaPlanMantenimiento}            
+
+taller_nueva_tarea_plan_mantenimiento_procesar:
+    path:     /taller/addtareaproc
+    defaults: { _controller: GestionBundle:GestionTaller:nuevaTareaPlanMantenimientoProcesar}    
+    methods: POST     
+
+taller_asignar_tarea_plan:
+    path:     /taller/addtareaplan
+    defaults: { _controller: GestionBundle:GestionTaller:asignarTareaPlan}          
+
+taller_asignar_tarea_plan_procesar:
+    path:     /taller/addtareaplanproc
+    defaults: { _controller: GestionBundle:GestionTaller:asignarTareaPlanProcesar}        
+    methods: POST
+
+    
+#/////////////////////////////////////
+
+taller_diagramar_tarea:
+    path:     /taller/newdiagr
+    defaults: { _controller: GestionBundle:GestionTaller:nuevoDiagrama}   
+
+taller_diagramar_tarea_proc:
+    path:     /taller/newdiagrproc
+    defaults: { _controller: GestionBundle:GestionTaller:nuevoDiagramaProcesar}       
+    methods: POST
+
+taller_diagramar_tarea_listar:
+    path:     /taller/listdiag
+    defaults: { _controller: GestionBundle:GestionTaller:listarDiagramaTareas}       
+
+taller_diagramar_agregar_tareas:
+    path:     /taller/addtareadiagrama/{id}
+    defaults: { _controller: GestionBundle:GestionTaller:addTareaDiagrama}      
+
+taller_diagramar_agregar_plan_a_diagrama:
+    path:     /taller/addplandiag
+    defaults: { _controller: GestionBundle:GestionTaller:addPlanADiagrama}  
+    methods: POST       
+
+
+#procesa el retorno por parte del empleado del diagrama de tareas 
+taller_diagramar_tareas_procesar:
+    path:     /taller/procdiagrama/{id}
+    defaults: { _controller: GestionBundle:GestionTaller:procesarDiagramaTareas}  
+
+taller_diagramar_tareas_procesar_tarea_diagramada:
+    path:     /taller/protardiag/{id}
+    defaults: { _controller: GestionBundle:GestionTaller:procesarTareaDiagramada}            
+
+taller_diagramar_tareas_procesar_finalizar:
+    path:     /taller/finprocdiag/{id}
+    defaults: { _controller: GestionBundle:GestionTaller:finalizarProcesarDiagramaTareas}      
+
+taller_diagramar_tareas_imprimir:
+    path:     /taller/impdiag/{id}
+    defaults: { _controller: GestionBundle:GestionTaller:imprimirDiagramaTareas}           
+#------------------------------------------------------------
+
+
+taller_diagramar_quitar_tarea:
+    path:     /taller/deltarea/{id}
+    defaults: { _controller: GestionBundle:GestionTaller:deleteTareaDiagrama}        
+
+taller_finalizar_diagrama_tareas:
+    path:     /taller/finalizar/{id}
+    defaults: { _controller: GestionBundle:GestionTaller:finalizarDiagrama}      
+
+#agrega una tarea a la planilla de diagramacion
+taller_diagramar_agregar_tareas_procesar:
+    path:     /taller/addtareaproc/{diagrama}/{anomalia}
+    defaults: { _controller: GestionBundle:GestionTaller:addTareaDiagramaProcesar} 
+    methods: POST     
+
+taller_recepcionar_form0015:
+    path:     /taller/recf15
+    defaults: { _controller: GestionBundle:GestionTaller:recepcionarF015} 
+
+taller_recepcionar_form0015_set_result:
+    path:     /taller/chresult
+    defaults: { _controller: GestionBundle:GestionTaller:changeResult}     
+    methods: POST
+
+taller_recepcionar_form0015_action_planilla:
+    path:     /taller/actionf005/{planilla}
+    defaults: { _controller: GestionBundle:GestionTaller:accionPlanilla}     
+    methods: POST    

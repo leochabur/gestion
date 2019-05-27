@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<span class="h5">Modificar Articulo</span>
+
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+        <div class="form-group row">
+            <div class="col-md-9">
+                {{  form_label(form.descripcion)    }}
+                {{  form_widget(form.descripcion, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.descripcion) }}
+                </span>
+            </div>    
+        </div>             
+        <div class="form-group row">
+            <div class="col-md-4">
+                {{  form_label(form.codigoBarras)    }}
+                {{  form_widget(form.codigoBarras, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.codigoBarras) }}
+                </span>
+            </div>    
+        </div>                
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{  form_label(form.ultimoPrecio, 'Precio Compra')    }}
+                {{  form_widget(form.ultimoPrecio, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.ultimoPrecio) }}
+                </span>
+            </div>    
+        </div>          
+		<div class="form-group row">
+			<div class="col-md-2">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>
+		</div>	
+	 {{ form_end(form) }}
+
+
+	</div>
+{% endblock %}

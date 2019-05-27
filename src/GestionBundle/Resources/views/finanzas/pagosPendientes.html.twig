@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<span class="h5">Pagos pendientes de acreditar</span>
+		<input type="text" id="apply">
+					<table class="table table-striped table-hover table-bordered results table-sm">
+						<thead>
+							<tr>
+	                            <th>N° Pago</th>
+	                            <th>Periodo</th>	
+	                            <th>Detalle</th>                            
+	                            <th>Importe</th>    
+	                            <th>Add</th>                     
+							</tr>
+						</thead>
+						<tbody>						
+					        {% for pago in pagos %}
+	                            <tr>
+		                           	<td> {{ pago.numeroPago }} </td>
+	                                <td> {{ pago.periodoMes }}/{{ pago.periodoAnio }}</td>
+	                                <td> {{ pago.concepto }} </td>                                              
+	                                <td align="right">{{ pago.monto|number_format(2, '.', '') }}</td>
+	                                <td> <input type="checkbox" data-monto="{{pago.monto}}" class="add"></td>
+	                            </tr>
+					        {% endfor %}
+					     </tbody>
+					</table>	
+
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	
+	{{ parent() }}
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".add").click(function(){
+									var sum = 0;
+									$("input[type=checkbox]:checked").each(function(){
+									        sum+=$(this).data('monto');
+									 });
+									$("#apply").val(sum);
+			});
+
+		});
+
+
+	</script>
+
+{% endblock %}

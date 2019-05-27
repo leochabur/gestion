@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+    <span class="h5">Carga archivo Subsidio</span>
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}   
+        <div class="form-group ">
+            <div class="col-md-2">
+                {{  form_label(form.archivo)  }}
+                {{  form_widget(form.archivo) }}
+            </div>    
+        </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    {{  form_label(form.periodo_mes)  }}
+                    {{  form_widget(form.periodo_mes, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                    <span class="text-danger">
+                        {{ form_errors(form.periodo_mes) }}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    {{  form_label(form.periodo_anio)  }}
+                    {{  form_widget(form.periodo_anio, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                    <span class="text-danger">
+                        {{ form_errors(form.periodo_anio) }}
+                    </span>
+                </div>
+            </div>           
+            <div class="form-group row">
+                <div class="col-md-3">
+                    {{  form_label(form.numero_pago)  }}
+                    {{  form_widget(form.numero_pago, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                    <span class="text-danger">
+                        {{ form_errors(form.numero_pago) }}
+                    </span>
+                </div>
+            </div>  
+        <div class="form-group row">
+            <div class="col-md-2">
+                {{ form_widget(form.load, {'attr':{'class' : 'btn btn-success'}})}}
+            </div>
+        </div>  
+	{{ form_end(form) }}
+	</div>
+{% endblock %}
